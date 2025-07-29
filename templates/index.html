@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic QR Redirect</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 50px; background: #111; color: #fff; }
+    img { width: 200px; margin: 20px 0; }
+    input, button { padding: 10px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h1>📲 Scan the QR Code</h1>
+  <img src="{{ qr_url }}" alt="QR Code">
+  <p>🔗 Current redirect URL: <strong>{{ current_url }}</strong></p>
+
+  <form action="/update" method="post">
+    <input type="url" name="new_url" placeholder="Enter new redirect URL" required>
+    <button type="submit">Update Redirect</button>
+  </form>
+</body>
+</html>
