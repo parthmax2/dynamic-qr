@@ -2,21 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dynamic QR Redirect</title>
-  <style>
-    body { font-family: sans-serif; text-align: center; margin-top: 50px; background: #111; color: #fff; }
-    img { width: 200px; margin: 20px 0; }
-    input, button { padding: 10px; font-size: 16px; }
-  </style>
+  <title>Dynamic QR Redirector</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <h1>📲 Scan the QR Code</h1>
-  <img src="{{ qr_url }}" alt="QR Code">
-  <p>🔗 Current redirect URL: <strong>{{ current_url }}</strong></p>
+  <h1> Dynamic QR Redirector</h1>
 
+  <p>Scan this QR code. It always points to <code>/qr</code> on this site, but the final redirection URL can be updated below.</p>
+
+  <img src="{{ qr_url }}" alt="QR Code" width="200">
+
+  <h2>🔗 Current Redirect URL:</h2>
+  <code style="display:block; margin-bottom: 1rem;">{{ current_url }}</code>
+
+  <h2>🔧 Update Redirection URL</h2>
   <form action="/update" method="post">
-    <input type="url" name="new_url" placeholder="Enter new redirect URL" required>
-    <button type="submit">Update Redirect</button>
+    <input type="url" name="new_url" placeholder="https://new-destination.com" required style="width: 100%;">
+    <button type="submit" style="margin-top: 1rem;">Update</button>
   </form>
 </body>
 </html>
