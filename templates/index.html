@@ -1,25 +1,176 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dynamic QR Redirector</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
-<body>
-  <h1> Dynamic QR Redirector</h1>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="sticky top-0 bg-white shadow-sm z-50">
+    <nav class="max-w-3xl mx-auto flex items-center justify-between px-4 sm:px-6 py-4">
+      <h1 class="text-blue-700 font-bold text-2xl select-none">Dynamic QR Redirector</h1>
+      <ul class="flex space-x-6 text-gray-700 font-medium text-sm">
+        <li>
+          <a
+            href="#how-it-works"
+            class="hover:text-blue-600 transition duration-300"
+            aria-label="How it Works"
+            >How it Works</a
+          >
+        </li>
+        <li>
+          <a
+            href="#about-me"
+            class="hover:text-blue-600 transition duration-300"
+            aria-label="About Me"
+            >About Me</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </header>
 
-  <p>Scan this QR code. It always points to <code>/qr</code> on this site, but the final redirection URL can be updated below.</p>
+  <!-- Main Content -->
+  <main class="flex-grow max-w-3xl mx-auto px-4 sm:px-6 py-10 w-full">
+    <!-- Intro Section -->
+    <section class="mb-12 text-center">
+      <p class="text-gray-700 text-lg sm:text-xl max-w-xl mx-auto mb-6">
+        Scan this QR. It always points to <code class="font-mono bg-gray-100 rounded px-1 py-0.5">/qr</code>, but can be updated anytime.
+      </p>
+      <div class="inline-block rounded-lg shadow-lg overflow-hidden border border-gray-200">
+        <img
+          src="{{ qr_url }}"
+          alt="Dynamic QR code that always points to /qr endpoint, black and white pixel pattern on white background"
+          class="w-48 h-48 sm:w-56 sm:h-56 object-contain"
+          decoding="async"
+          loading="lazy"
+        />
+      </div>
+    </section>
 
-  <img src="{{ qr_url }}" alt="QR Code" width="200">
+    <!-- Current Redirect URL -->
+    <section class="mb-12 text-center">
+      <h2 class="text-blue-700 font-semibold text-lg mb-3">Current Redirect URL</h2>
+      <pre
+        class="bg-gray-100 text-sm font-mono rounded-lg p-4 max-w-full overflow-x-auto text-gray-800 select-all"
+        aria-label="Current redirect URL"
+      >{{ current_url }}</pre>
+    </section>
 
-  <h2>🔗 Current Redirect URL:</h2>
-  <code style="display:block; margin-bottom: 1rem;">{{ current_url }}</code>
+    <!-- Update Form -->
+    <section class="mb-20">
+      <form
+        method="POST"
+        action="/update-url"
+        class="max-w-xl mx-auto flex flex-col sm:flex-row gap-4"
+        novalidate
+      >
+        <label for="url" class="sr-only">New Redirect URL</label>
+        <input
+          id="url"
+          name="url"
+          type="url"
+          placeholder="Enter new redirect URL (e.g. https://example.com)"
+          required
+          class="flex-grow rounded-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent shadow-sm transition duration-200"
+          autocomplete="off"
+        />
+        <button
+          type="submit"
+          class="rounded-md bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold px-6 py-3 hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-200"
+        >
+          Update URL
+        </button>
+      </form>
+    </section>
 
-  <h2>🔧 Update Redirection URL</h2>
-  <form action="/update" method="post">
-    <input type="url" name="new_url" placeholder="https://new-destination.com" required style="width: 100%;">
-    <button type="submit" style="margin-top: 1rem;">Update</button>
-  </form>
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="mb-20 px-4 sm:px-0">
+      <h2 class="text-blue-700 font-bold text-2xl mb-6 text-center sm:text-left">How It Works</h2>
+      <ol class="list-decimal ml-6 space-y-4 text-gray-700 max-w-xl mx-auto sm:mx-0">
+        <li>
+          <span class="font-semibold">Scan the QR code:</span> The QR code always points to the <code class="font-mono bg-gray-100 rounded px-1 py-0.5">/qr</code> endpoint.
+        </li>
+        <li>
+          <span class="font-semibold">Dynamic redirect:</span> When scanned, the QR code redirects users to the URL currently set in the system.
+        </li>
+        <li>
+          <span class="font-semibold">Update anytime:</span> Use the form above to update the redirect URL dynamically without changing the QR code.
+        </li>
+        <li>
+          <span class="font-semibold">Instant effect:</span> Changes take effect immediately, so all scans after update redirect to the new URL.
+        </li>
+        <li>
+          <span class="font-semibold">Easy management:</span> This allows flexible redirection for marketing campaigns, events, or any use case.
+        </li>
+      </ol>
+    </section>
+
+    <!-- About Me Section -->
+    <section
+      id="about-me"
+      class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md text-gray-700"
+    >
+      <h2 class="text-blue-700 font-bold text-2xl mb-6 text-center sm:text-left">About Me</h2>
+      <div class="space-y-4 text-center sm:text-left">
+        <p class="text-lg font-semibold">Saksham Pathak</p>
+        <p class="text-gray-600">Generative AI Engineer</p>
+        <p class="text-gray-600">Lucknow, India</p>
+        <div class="flex justify-center sm:justify-start space-x-6 mt-4 text-blue-600">
+          <a
+            href="https://github.com/sakshampathak"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub Profile"
+            class="hover:text-blue-800 transition duration-200"
+          >
+            <i class="fab fa-github fa-lg"></i>
+          </a>
+          <a
+            href="mailto:saksham@example.com"
+            aria-label="Send Email"
+            class="hover:text-blue-800 transition duration-200"
+          >
+            <i class="fas fa-envelope fa-lg"></i>
+          </a>
+          <a
+            href="https://iitjam.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="IIT JAM"
+            class="hover:text-blue-800 transition duration-200"
+          >
+            <i class="fas fa-graduation-cap fa-lg"></i>
+          </a>
+          <a
+            href="https://huggingface.co/sakshampathak"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Hugging Face Profile"
+            class="hover:text-blue-800 transition duration-200"
+          >
+            <i class="fab fa-huggingface fa-lg"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100">
+    <p class="text-sm text-gray-500 text-center py-4 select-none">
+      © 2025 Dynamic QR Redirector — Built with <span aria-label="love" role="img">❤️</span> by Saksham Pathak
+    </p>
+  </footer>
 </body>
 </html>
