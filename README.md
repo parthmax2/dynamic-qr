@@ -1,13 +1,3 @@
----
-title: Dynamic-QR
-emoji: 🔗
-colorFrom: blue
-colorTo: green
-sdk: docker
-sdk_version: "1.0"
-app_file: Dockerfile
-pinned: false
----
 
 # Dynamic-QR: QR Code Management System
 
@@ -256,3 +246,4 @@ Made with ❤️ by [parthmax](https://github.com/parthmax2)
 
 </div>
 ```
+
